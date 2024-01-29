@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-image: url("ipod.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: 120% 80%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .rect-container {
+        width: 273px;
+        height: 272px;
+        overflow: hidden;
+        background-image: url("other.png");
+        background-size: cover;
+        position: absolute;
+        left: 61px;
+        top: 46px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+      }
+      .header {
+        padding: 0px;
+        margin: 0px;
+        background: linear-gradient(to bottom, #ffffff, #656565);
+        color: #000000;
+        font-weight: bold;
+        font-family: "Arial", sans-serif;
+      }
+      .song-button {
+        font-size: 16px;
+        padding: 1.9px;
+        background: white;
+        color: black;
+        font-weight: bold;
+        border: 0.5px solid rgb(0, 0, 0);
+        cursor: pointer;
+        text-align: left;
+      }
+      .song-button:active {
+        background: linear-gradient(to bottom, #00aaff, #0008ff);
+        color: #fff;
+      }
+      @media (hover: hover) {
+        .song-button:hover {
+          background: linear-gradient(to bottom, #00aaff, #0008ff);
+          color: #fff;
+        }
+      }
+      .circle {
+        position: absolute;
+        top: 400px;
+        width: 100px;
+        height: 125px;
+        background-color: rgb(255, 61, 158, 0);
+        border-radius: 50%;
+      }
+    </style>
+    <title>Ava's iPod</title>
+  </head>
+  <body>
+    <div class="songs"></div>
+    <!-- <div class="image-container"></div> -->
+    <div class="rect-container">
+      <p id="headerThing" class="header">*ੈ✩‧♬₊˚ ava's ipod nano *₊°。❀°。</p>
+      <button class="song-button" onclick="playSong('babyYoureAStar')">
+        Baby You're A Star
+      </button>
+      <button class="song-button" onclick="playSong('waterlooSunset')">
+        Waterloo Sunset
+      </button>
+      <button class="song-button" onclick="playSong('milkRemaster')">
+        Milk - 2021 Remaster
+      </button>
+      <button class="song-button" onclick="playSong('leavesThatAreGreen')">
+        Leaves That Are Green
+      </button>
+      <button class="song-button" onclick="playSong('neverLoseMe')">
+        Never Lose Me
+      </button>
+      <button class="song-button" onclick="playSong('picture')">Picture</button>
+      <button class="song-button" onclick="playSong('blessTheTelephone')">
+        Bless The Telephone
+      </button>
+      <button class="song-button" onclick="playSong('idHaveYouAnytime')">
+        I'd Have You Anytime
+      </button>
+      <button class="song-button" onclick="playSong('fastCar')">
+        Fast Car
+      </button>
+      <button class="song-button" onclick="playSong('tillForever')">
+        'Till Forever
+      </button>
+    </div>
+    <button class="circle" onclick="stopSong()"></button>
+  </body>
+  <script>
+    var audioElement = new Audio();
+
+    // Dictionary for each song
+    var songs = {
+      babyYoureAStar: {
+        audio: "baby.mp3",
+        image: "scarf.jpg",
+        text: "Baby You're A Star",
+      },
+      waterlooSunset: {
+        audio: "waterloo.mp3",
+        image: "loo.png",
+        text: "Waterloo Sunset",
+      },
+      milkRemaster: {
+        audio: "milk.mp3",
+        image: "milk.jpeg",
+        text: "Milk - 2021 Remaster",
+      },
+      leavesThatAreGreen: {
+        audio: "leaves.mp3",
+        image: "green.png",
+        text: "Leaves That Are Green",
+      },
+      neverLoseMe: {
+        audio: "never.mp3",
+        image: "never.png",
+        text: "Never Lose Me",
+      },
+      picture: {
+        audio: "picture.mp3",
+        image: "picture.png",
+        text: "Picture",
+      },
+      blessTheTelephone: {
+        audio: "bless.mp3",
+        image: "phone.png",
+        text: "Bless the Telephone",
+      },
+      idHaveYouAnytime: {
+        audio: "id.mp3",
+        image: "done.png",
+        text: "I'd Have You Anytime",
+      },
+      fastCar: {
+        audio: "fast.mp3",
+        image: "fast.jpeg",
+        text: "Fast Car",
+      },
+      tillForever: {
+        audio: "till.mp3",
+        image: "forever.png",
+        text: "'Till Forever",
+      },
+    };
+
+    var isAudioPlaying = false;
+
+    // change song and display corresponding image
+    function playSong(songKey) {
+      if (isAudioPlaying) {
+        stopSong();
+      } else {
+        //stop displaying song names class
+        var songButtons = document.getElementsByClassName("song-button");
+        setTimeout(function () {
+          for (var i = 0; i < songButtons.length; i++) {
+            songButtons[i].style.display = "none";
+          }
+        }, 200);
+        //play song
+        var song = songs[songKey];
+        audioElement.src = song.audio;
+        audioElement.play();
+
+        //change background image of container
+        var rectContainer = document.querySelector(".rect-container");
+        rectContainer.style.backgroundImage = "url('" + song.image + "')";
+        document.getElementById("headerThing").innerText = song.text;
+
+        isAudioPlaying = true;
+      }
+    }
+    audioElement.addEventListener("ended", function () {
+      stopSong();
+    });
+
+    function stopSong() {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+
+      document.getElementById("headerThing").innerText = "*ੈ✩‧♬₊˚ ava's ipod nano *₊°。❀°。";
+      var songButtons = document.getElementsByClassName("song-button");
+      for (var i = 0; i < songButtons.length; i++) {
+        songButtons[i].style.display = "block";
+      }
+
+      isAudioPlaying = false;
+    }
+
+    const songButtons = document.querySelectorAll(".song-button");
+
+    songButtons.forEach((button) => {
+      button.addEventListener("touchstart", function () {
+        playSong();
+        this.classList.add("active");
+      });
+
+      button.addEventListener("touchend", function () {
+        //stopSong
+        this.classList.remove("active");
+      });
+
+      // Optional: Prevent the default behavior for better touch responsiveness
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        // Your existing click event handling logic goes here
+      });
+    });
+  </script>
+</html>
