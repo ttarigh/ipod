@@ -7,7 +7,6 @@
       body {
         margin: 0;
         padding: 0;
-        background-image: url("ipod.png");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: top center;
@@ -18,15 +17,11 @@
         align-items: center;
       }
       .rect-container {
-        width: 273px;
-        height: 272px;
         overflow: hidden;
         background-image: url("other.png");
         background-size: cover;
         position: absolute;
-        left: 61px;
-        top: 46px;
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: left;
       }
@@ -37,6 +32,16 @@
         color: #000000;
         font-weight: bold;
         font-family: "Arial", sans-serif;
+      }
+      .heading-container {
+        display: flex;
+        flex-direction: column;
+      }
+      #h2 {
+        display: none;
+      }
+      #h1 {
+        display: none;
       }
       .song-button {
         font-size: 16px;
@@ -58,20 +63,58 @@
           color: #fff;
         }
       }
+      @media only screen and (max-width: 400px) {
+        body {
+          background-image: url("ipod.png");
+        }
+        .rect-container {
+          width: 273px;
+          height: 272px;
+          left: 61px;
+          top: 46px;
+          display: flex;
+        }
+      }
+      @media only screen and (max-width: 510px) and (min-height: 700px) {
+        body {
+          background-image: url("ipod.png");
+          background-attachment: fixed;
+        }
+        .rect-container {
+          width: 360px;
+          height: 256px;
+          left: 70px;
+          top: 46px;
+          display: flex;
+        }
+      }
+      @media only screen and (max-height: 699px) {
+        #h2 {
+          display: block;
+        }
+      }
+      @media only screen and (min-width: 510px) {
+        #h1 {
+          display: block;
+        }
+      }
+
       .circle {
         position: absolute;
         top: 400px;
         width: 100px;
         height: 125px;
         background-color: rgb(255, 61, 158, 0);
-        border-radius: 50%;
+        border: none;
       }
     </style>
     <title>Ava's iPod</title>
   </head>
   <body>
-    <div class="songs"></div>
-    <!-- <div class="image-container"></div> -->
+    <div class="heading-container">
+      <h1 id="h1">←make ur screen SMALLER→</h1>
+      <h1 id="h2">↑make ur screen LONGER↓</h1>
+    </div>
     <div class="rect-container">
       <p id="headerThing" class="header">*ੈ✩‧♬₊˚ ava's ipod nano *₊°。❀°。</p>
       <button class="song-button" onclick="playSong('babyYoureAStar')">
@@ -197,7 +240,8 @@
       audioElement.pause();
       audioElement.currentTime = 0;
 
-      document.getElementById("headerThing").innerText = "*ੈ✩‧♬₊˚ ava's ipod nano *₊°。❀°。";
+      document.getElementById("headerThing").innerText =
+        "*ੈ✩‧♬₊˚ ava's ipod nano *₊°。❀°。";
       var songButtons = document.getElementsByClassName("song-button");
       for (var i = 0; i < songButtons.length; i++) {
         songButtons[i].style.display = "block";
